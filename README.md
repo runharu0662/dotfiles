@@ -35,11 +35,18 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 #### リポジトリのクローン
 
 このdotfilesリポジトリをホームディレクトリにクローンします。
+このリポジトリはサブモジュール（`nvim-alt`）を含んでいるため、`--recurse-submodules`フラグを付けてクローンする必要があります。
 
 ```bash
-git clone https://github.com/runharu0662/dotfiles.git ~/dotfiles
+git clone --recurse-submodules https://github.com/runharu0662/dotfiles.git ~/dotfiles
 ```
 **注意:** `runharu0662`の部分は、ご自身のGitHubユーザー名に置き換えてください。
+
+もしフラグを付けずにクローンしてしまった場合は、以下のコマンドでサブモジュールを初期化・更新できます。
+```bash
+cd ~/dotfiles
+git submodule update --init --recursive
+```
 
 #### 設定の適用
 
@@ -65,3 +72,4 @@ brew bundle install
 - **`.zshrc`, `.config/`, etc.:** 各種設定ファイルの実体。
 - **`install.sh`:** ホームディレクトリに設定ファイルのシンボリックリンクを作成するスクリプト。
 - **`Brewfile`:** Homebrewで管理するパッケージのリスト。
+- **`.gitmodules`:** `nvim-alt`などのサブモジュールを管理するファイル。
