@@ -13,3 +13,4 @@ brew "uv"
 
 cask "hammerspoon"
 cask "wezterm@nightly"
+cask "karabiner-elements"
