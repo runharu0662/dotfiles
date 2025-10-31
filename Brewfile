@@ -1,0 +1,15 @@
+tap "jesseduffield/lazygit"
+tap "koekeishiya/formulae"
+
+brew "lazygit"
+brew "lsd"
+brew "neovim"
+brew "ripgrep"
+brew "koekeishiya/formulae/skhd"
+brew "koekeishiya/formulae/yabai"
+brew "nodebrew"
+brew "pyenv"
+brew "uv"
+
+cask "hammerspoon"
+cask "wezterm@nightly"
