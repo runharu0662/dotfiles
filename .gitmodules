@@ -1,0 +1,3 @@
+[submodule ".config/nvim-alt"]
+	path = .config/nvim-alt
+	url = https://github.com/runharu0662/nvim-alt.git
