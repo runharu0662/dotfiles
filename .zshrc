@@ -50,16 +50,6 @@ export GIT_EDITOR="nvim"
 [ -f ~/z/z.sh ] && . ~/z/z.sh
 
 # =========================
-#  Secrets (別ファイル)
-# =========================
-# ~/.config/env.d/secrets.env にAPIキー等を退避（後述）
-if [ -f "$HOME/.config/env.d/secrets.env" ]; then
-  set -a
-  source "$HOME/.config/env.d/secrets.env"
-  set +a
-fi
-
-# =========================
 #  Aliases
 # =========================
 alias ls='lsd'                 # 見やすい ls
