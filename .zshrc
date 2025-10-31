@@ -67,10 +67,9 @@ wez() { open -na WezTerm --args start --cwd "${1:-$PWD}"; }
 
 # 便利：Obsidian Vault へ移動して nvim 起動
 ob() {
-  cd /Users/ishiiharuta/Documents/Obsidian_Vaults/Obsidian_Vault1 || return
+  cd $HOME/Documents/Obsidian_Vaults/Obsidian_Vault1 || return
   nvim
 }
-# あなたの独自コマンド（そのまま残し）
 splup () { python ~/app/s3s/s3s.py -M 60 -r -nsr; }
 daily() { cd ~/dev/cpp && git add . && git commit -m auto && gitp && cd; }
 start() { ~/dev/script/windows.sh; }
