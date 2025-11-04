@@ -1,13 +1,13 @@
 tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
-tap "homebrew/cask-fonts"
+
 
 brew "lazygit"
 brew "lsd"
 brew "neovim"
 brew "ripgrep"
-brew "koekeishiya/formulae/skhd"
-brew "koekeishiya/formulae/yabai"
+
+
 brew "nodebrew"
 brew "pyenv"
 brew "uv"
