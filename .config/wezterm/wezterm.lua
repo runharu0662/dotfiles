@@ -87,8 +87,8 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 end)
 
 config.window_padding = {
-	top = 0,
-	bottom = 0,
+	top = 1,
+	bottom = 1,
 }
 -- set bar height
 config.line_height = 1.0

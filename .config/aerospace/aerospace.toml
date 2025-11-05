@@ -52,12 +52,12 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 see: https://nikitabobko.github.io/aerospace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 8
-inner.vertical =   8
-outer.left =       4
-outer.bottom =     4
-outer.top =        3
-outer.right =      4
+inner.horizontal = 6
+inner.vertical =   6
+outer.left =       6
+outer.bottom =     6
+outer.top =        5
+outer.right =      6
 
 # 'main' binding mode declaration
 # see: https://nikitabobko.github.io/aerospace/guide#binding-modes
