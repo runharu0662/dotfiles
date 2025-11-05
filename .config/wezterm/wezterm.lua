@@ -27,6 +27,7 @@ config.hide_tab_bar_if_only_one_tab = false
 config.window_frame = {
 	inactive_titlebar_bg = "none",
 	active_titlebar_bg = "none",
+    font_size = 14.0,
 }
 
 -- タブバーを背景色に合わせる
@@ -88,10 +89,12 @@ end)
 
 config.window_padding = {
 	top = 1,
-	bottom = 1,
+	bottom = 2,
 }
 -- set bar height
 config.line_height = 1.0
+config.cell_width = 1.0
+
 ----------------------------------------------------
 -- keybinds
 ----------------------------------------------------
