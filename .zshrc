@@ -14,6 +14,7 @@ esac
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 # =========================
 #  Locale
