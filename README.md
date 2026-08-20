@@ -10,66 +10,47 @@ My personal dotfiles for macOS, managed for quick and easy setup on a new machin
 
 ## 新しいMacでのセットアップ手順
 
-新しいmacOS環境をセットアップするには、以下の手順に従ってください。
+新しいmacOS環境では、リポジトリを取得してインストーラーを実行します。
 
-### 1. 前提ツールのインストール
+### 1. Xcode Command Line Tools
 
-#### Homebrew
-
-macOSのパッケージマネージャーである[Homebrew](https://brew.sh/index_ja)をインストールします。
+未導入の場合は、先に次のコマンドを実行します。
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+xcode-select --install
 ```
 
-#### Oh My Zsh
+`install.sh`から起動することもできます。その場合、インストール完了後に
+`install.sh`をもう一度実行してください。
 
-Zshのフレームワークである[Oh My Zsh](https://ohmyz.sh/)をインストールします。
-
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-### 2. Dotfilesの適用
-
-#### リポジトリのクローン
+### 2. リポジトリのクローン
 
 このdotfilesリポジトリをホームディレクトリにクローンします。
-このリポジトリはサブモジュール（`nvim-alt`）を含んでいるため、`--recurse-submodules`フラグを付けてクローンする必要があります。
+`nvim-alt`サブモジュールも同時に取得するため、`--recurse-submodules`を付けます。
 
 ```bash
 git clone --recurse-submodules https://github.com/runharu0662/dotfiles.git ~/dotfiles
 ```
-**注意:** `runharu0662`の部分は、ご自身のGitHubユーザー名に置き換えてください。
 
-もしフラグを付けずにクローンしてしまった場合は、以下のコマンドでサブモジュールを初期化・更新できます。
-```bash
-cd ~/dotfiles
-git submodule update --init --recursive
-```
+このフラグを忘れても、`install.sh`がサブモジュールを初期化します。
 
-#### 設定の適用
+### 3. セットアップ
 
-`install.sh`スクリプトを実行して、設定ファイルのシンボリックリンクを作成します。
+`install.sh`はHomebrew、`Brewfile`のツール、Oh My Zsh、テーマ、プラグインを導入し、
+設定ファイルのシンボリックリンクを作成します。
+既存の設定がある場合は削除せず、`~/.dotfiles-backup/<実行日時>/`へ退避します。
 
 ```bash
 cd ~/dotfiles
 ./install.sh
 ```
 
-### 3. ソフトウェアのインストール
-
-`Brewfile`を使って、必要なソフトウェアを一括でインストールします。
-
-```bash
-brew bundle install
-```
-
-これで、以前の環境と同じ設定とツールがすべて揃います。
+インターネットから取得したインストールスクリプトは、実行前に内容を確認してください。
+処理は再実行可能で、すでに導入済みの構成要素はそのまま利用します。
 
 ## リポジトリの構成
 
 - **`.zshrc`, `.config/`, etc.:** 各種設定ファイルの実体。
-- **`install.sh`:** ホームディレクトリに設定ファイルのシンボリックリンクを作成するスクリプト。
+- **`install.sh`:** 必要なツールを導入し、設定ファイルのシンボリックリンクを作成するスクリプト。
 - **`Brewfile`:** Homebrewで管理するパッケージのリスト。
 - **`.gitmodules`:** `nvim-alt`などのサブモジュールを管理するファイル。
