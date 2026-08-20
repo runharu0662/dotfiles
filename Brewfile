@@ -4,6 +4,7 @@ tap "koekeishiya/formulae"
 
 # --- Core CLI tools ---
 brew "neovim"
+brew "git"
 brew "ripgrep"
 brew "fd"
 brew "lsd"
