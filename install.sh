@@ -129,3 +129,6 @@ done
 for file in "${config_files[@]}"; do
   backup_and_link "$DOTFILES_DIR/.config/$file" "$HOME/.config/$file"
 done
+
+# Dock・スクリーンショット・SafariのmacOS設定を適用する。
+/bin/bash "$DOTFILES_DIR/macos.sh"

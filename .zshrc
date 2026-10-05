@@ -14,7 +14,6 @@ esac
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-export PATH="$PATH:$(go env GOPATH)/bin"
 
 # =========================
 #  Locale
@@ -38,11 +37,6 @@ source $ZSH/oh-my-zsh.sh
 # =========================
 #  Tools
 # =========================
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 # Neovim
 export NVIM_APPNAME="nvim-alt"
 export GIT_EDITOR="nvim"
@@ -71,7 +65,6 @@ ob() {
   cd $HOME/Documents/Obsidian_Vaults/Obsidian_Vault1 || return
   nvim
 }
-splup () { python ~/app/s3s/s3s.py -M 60 -r -nsr; }
 daily() { cd ~/dev/cpp && git add . && git commit -m auto && gitp && cd; }
 start() { ~/dev/script/windows.sh; }
 
@@ -79,4 +72,3 @@ start() { ~/dev/script/windows.sh; }
 #  Final
 # =========================
 # ここに「open -a WezTerm .」のような自動起動は置かないこと！
-
