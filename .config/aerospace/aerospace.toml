@@ -105,6 +105,12 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # see: https://nikitabobko.github.io/aerospace/commands#workspace
+# --- Memo for Troubleshooting ---
+# もし特定のショートカット（特に ctrl-2）が効かなくなった場合：
+# 1. システム設定 > キーボード > ショートカット > キーボード > 「メニューバーを操作対象にする(^F2)」等のチェックが外れているか確認
+# 2. macOSの「操作スペースを自動的に並べ替える」がオフになっているか確認
+# 3. それでもダメなら Mac を再起動
+# -------------------------------
 ctrl-1 = 'workspace 1'
 ctrl-2 = 'workspace 2'
 ctrl-3 = 'workspace 3'
