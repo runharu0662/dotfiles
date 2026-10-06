@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSStatusItem VisibleCC Item-0</key>
+	<true/>
+	<key>accentColorMode</key>
+	<string>1</string>
+	<key>accentColorMode__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:35:29Z</date>
+	<key>animationConfiguration</key>
+	<integer>3</integer>
+	<key>animationConfiguration__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:36:17Z</date>
+	<key>hideMenuBarIcon</key>
+	<false/>
+	<key>keybinds</key>
+	<array>
+		<string>{"direction":"MoveRight","id":"D087825A-A501-4FCC-B434-4F903212A5B3","keybind":[124]}</string>
+		<string>{"direction":"FocusLeft","id":"31EBDB3B-9DC2-4B45-92E0-913704069F9C","keybind":[4]}</string>
+		<string>{"direction":"FocusRight","id":"8F584AC8-FDEE-451B-ACC2-A72EBB9DC938","keybind":[37]}</string>
+		<string>{"direction":"Maximize","id":"9993A6D4-0648-44D9-8577-92BF42C091A1","keybind":[3]}</string>
+		<string>{"bypassTriggerKey":true,"cycle":[{"direction":"RightHalf","id":"E0AC5E74-E5A1-418A-BE43-00194E12FDCB","keybind":[]},{"direction":"RightThird","id":"96ED76BF-8498-46C0-8693-DBAF3F79CCF4","keybind":[]},{"direction":"RightTwoThirds","id":"544C8858-9252-490D-8924-9897C65811C1","keybind":[]}],"direction":"Cycle","id":"BCEFB6FE-2404-4DA8-BA7C-E3A67F9AE1CF","keybind":[37,59,56],"name":"右部繰り返し"}</string>
+		<string>{"bypassTriggerKey":true,"cycle":[{"direction":"LeftHalf","id":"09CB8880-DD4D-4CDF-A753-ACF210B83436","keybind":[]},{"direction":"LeftThird","id":"5D2BB815-3FB2-44E6-82D7-AC1E19B50F60","keybind":[]},{"direction":"LeftTwoThirds","id":"868B6956-559B-41AC-99AF-9EBD477396A9","keybind":[]}],"direction":"Cycle","id":"339DADA7-C1F5-4DCA-A1CE-8DB0136A1C21","keybind":[4,56,59],"name":"左部繰り返し"}</string>
+	</array>
+	<key>keybinds__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:49:45Z</date>
+	<key>lastUsedAccentColor1</key>
+	<array>
+		<string>kCGColorSpaceSRGB</string>
+		<array>
+			<real>0.5450980392156862</real>
+			<real>0.4666666666666667</real>
+			<real>0.6549019607843137</real>
+			<real>1.0</real>
+		</array>
+	</array>
+	<key>lastUsedAccentColor2</key>
+	<array>
+		<string>kCGColorSpaceSRGB</string>
+		<array>
+			<real>0.5450980392156862</real>
+			<real>0.4666666666666667</real>
+			<real>0.6549019607843137</real>
+			<real>1.0</real>
+		</array>
+	</array>
+	<key>launchAtLogin</key>
+	<true/>
+	<key>launchAtLogin__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:36:00Z</date>
+	<key>notificationWhenIconUnlocked</key>
+	<false/>
+	<key>notificationWhenIconUnlocked__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:35:50Z</date>
+	<key>patchesApplied</key>
+	<integer>3</integer>
+	<key>patchesApplied__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:35:29Z</date>
+	<key>timesLooped</key>
+	<integer>20</integer>
+	<key>timesLooped__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-06T05:22:34Z</date>
+	<key>trigger</key>
+	<array>
+		<integer>58</integer>
+	</array>
+	<key>trigger__DEFAULTS__synchronizeTimestamp</key>
+	<date>2026-10-05T12:36:30Z</date>
+</dict>
+</plist>
