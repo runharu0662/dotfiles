@@ -43,7 +43,6 @@ macOS defaultsも自動適用しない。アプリ・パッケージのアンイ
 | `.zshrc` | Homebrew PATH、履歴、補完、基本options、標準prompt |
 | `.config/wezterm/` | ターミナルの外観・キー操作 |
 | `.config/nvim-alt` / `.gitmodules` | 既存Neovim。今回変更しない |
-| `.hammerspoon/` | 旧アプリ切替の参考設定。bootstrap対象外 |
 | `.config/karabiner/` | 現在使用中のキーボード・入力変換設定とルール素材を保存 |
 
 PATH初期化は`.zshrc`に集約し、ログイン・非ログインの対話シェルで使用する。
@@ -68,8 +67,7 @@ Dock、Safari、スクリーンショット、Finder、キーボード、トラ�
 - AeroSpace / yabai: 既存アプリがあれば終了し、ログイン項目を無効にする。
   installerは、このリポジトリを直接指す旧AeroSpaceリンクのみ退避する。
   他の場所を指すリンクや個人の設定には触れない。
-- Hammerspoon / Tailscale: 新規導入対象から外した。既存インストールは削除しない。
-  Hammerspoonの旧設定は参考として保持し、リンクは新規配置しない。
+- Tailscale: 新規導入対象から外した。既存インストールは削除しない。
 - Karabiner: キーボード別修飾キー変更・Ctrl+[の日本語入力切替を確認する。
   必要なら権限を許可する。`~/.config/karabiner`で現在使用中の設定・ルール素材を保存済み。
 - Neovim: `nvim`、`:checkhealth`、検索、SKK、日本語入力、画像貼付け、
