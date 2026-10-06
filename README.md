@@ -25,7 +25,8 @@ Brewfileはバージョンの完全固定ではなく、導入対象を管理す
 4. 下記の手動確認を行う。macOS本体の設定は手動で行う。
 
 `install.sh`はHomebrewとBrewfileのツールを導入し、
-Neovimサブモジュールを初期化して設定をリンクする。
+Neovimサブモジュールの`origin/web`最新版を取得し、`web`ブランチに切り替えて設定をリンクする。
+既存の`web`ブランチはfast-forwardで更新し、履歴が分岐していれば停止する。
 既存Homebrewは標準パスからも検出する。既存設定は
 `~/.dotfiles-backup/<実行日時>/`へ退避し、同じリンクは再利用する。
 CLTがなければインストーラーを起動して終了するため、完了後に再実行する。
@@ -42,7 +43,7 @@ macOS defaultsも自動適用しない。アプリ・パッケージのアンイ
 | `install.sh` | 導入・バックアップ・明示した設定のリンク |
 | `.zshrc` | Homebrew PATH、履歴、補完、基本options、標準prompt |
 | `.config/wezterm/` | ターミナルの外観・キー操作 |
-| `.config/nvim-alt` / `.gitmodules` | 既存Neovim。今回変更しない |
+| `.config/nvim-alt` / `.gitmodules` | Neovimの`web`ブランチを導入・追跡 |
 | `.config/karabiner/` | 現在使用中のキーボード・入力変換設定とルール素材を保存 |
 
 PATH初期化は`.zshrc`に集約し、ログイン・非ログインの対話シェルで使用する。

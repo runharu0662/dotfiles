@@ -61,7 +61,15 @@ install_homebrew() {
 
 install_homebrew
 
-git -C "$DOTFILES_DIR" submodule update --init --recursive
+# .gitmodulesの追跡ブランチから取得し、Neovimはwebブランチで使用する。
+git -C "$DOTFILES_DIR" submodule update --init --recursive --remote -- .config/nvim-alt
+nvim_config_dir="$DOTFILES_DIR/.config/nvim-alt"
+if git -C "$nvim_config_dir" show-ref --verify --quiet refs/heads/web; then
+  git -C "$nvim_config_dir" switch web
+else
+  git -C "$nvim_config_dir" switch --create web --track origin/web
+fi
+git -C "$nvim_config_dir" merge --ff-only origin/web
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 
 backup_and_link() {
