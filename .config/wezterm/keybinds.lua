@@ -38,7 +38,7 @@ return {
 				description = "(wezterm) Create new workspace:",
 				action = wezterm.action_callback(function(window, pane, line)
 					if line then
-						window:perform_aciton(
+						window:perform_action(
 							act.SwitchToWorkspace({
 								name = line,
 							}),
@@ -195,8 +195,7 @@ return {
 			{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
 			{ key = "c", mods = "CTRL", action = act.CopyMode("Close") },
 			{ key = "q", mods = "NONE", action = act.CopyMode("Close") },
-			-- enter, backspaceのバインド->IMEで^h^mをつかいたい
-			{ key = "Enter", mods = "NONE", action = act.SendKey({ key = "Enter" }) },
+			-- Backspace転送（Enterは上のコピー・終了操作に集約）
 			{ key = "Backspace", mods = "NONE", action = act.SendKey({ key = "Backspace" }) },
 		},
 	},

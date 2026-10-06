@@ -1,74 +1,32 @@
+# 対話シェルの基本設定のみ管理する。
+[[ -o interactive ]] || return
 
-# =========================
-#  Basic shell guard
-# =========================
-# 対話シェルでのみ下を実行（scp等の非対話で暴走しない）
-case $- in
-  *i*) ;;
-  *) return;;
-esac
+# 既存PATHを保持し、Homebrewを優先。再読み込みでも重複させない。
+typeset -U path
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 
-# =========================
-#  PATH（Apple Silicon）
-# =========================
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-
-# =========================
-#  Locale
-# =========================
+# 既存Neovim環境の起動条件を維持する。
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
-# =========================
-#  oh-my-zsh / theme
-# =========================
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
-# =========================
-#  Tools
-# =========================
-# Neovim
 export NVIM_APPNAME="nvim-alt"
 export GIT_EDITOR="nvim"
 
-# z (jump)
-[ -f ~/z/z.sh ] && . ~/z/z.sh
+# 履歴はZsh標準機能で保存・共有する。
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt APPEND_HISTORY SHARE_HISTORY HIST_IGNORE_DUPS HIST_REDUCE_BLANKS
 
-# =========================
-#  Aliases
-# =========================
-alias ls='lsd'                 # 見やすい ls
-alias lst='lsd --tree'
-alias gita='git add .'
-alias gitc='git commit -m'
-alias gitp='git push'
-alias code='nvim'
+# 基本的な対話操作と補完。外部pluginは読み込まない。
+setopt AUTO_CD INTERACTIVE_COMMENTS
+bindkey -e
+autoload -Uz compinit
+compinit
 
-# =========================
-#  Functions
-# =========================
-# WezTerm を現在/指定ディレクトリで開く（必要な時だけ起動）
-wez() { open -na WezTerm --args start --cwd "${1:-$PWD}"; }
-
-# 便利：Obsidian Vault へ移動して nvim 起動
-ob() {
-  cd $HOME/Documents/Obsidian_Vaults/Obsidian_Vault1 || return
-  nvim
-}
-daily() { cd ~/dev/cpp && git add . && git commit -m auto && gitp && cd; }
-start() { ~/dev/script/windows.sh; }
-
-# =========================
-#  Final
-# =========================
-# ここに「open -a WezTerm .」のような自動起動は置かないこと！
+# user@host directory %（rootでは#）
+PROMPT='%n@%m %~ %# '
+RPROMPT=''

@@ -1,64 +1,105 @@
-# My Dotfiles
+# Mac dotfiles
 
-My personal dotfiles for macOS, managed for quick and easy setup on a new machine.
+初期化したMacから、最小限・理解可能・再現可能な作業環境を復元する。
+主要ツールはLoop、WezTerm、macOS標準Zsh、Neovim。新規の言語ランタイム・DB・
+ミドルウェアはプロジェクトのDocker / Dev Container側で管理する。
+ローカル実行環境としてColimaとDocker CLI、ComposeをBrewfileから導入する。
 
-## 理念
+**既存Neovim環境は例外として保持する。** `.config/nvim-alt`のサブモジュール、
+plugin、Mason、LSP、formatter、linter、入力環境、その依存関係は整理対象外。
+`NVIM_APPNAME=nvim-alt`と既存の導入・リンク方式も維持する。
+Brewfileはバージョンの完全固定ではなく、導入対象を管理する。
 
-- **ミニマル:** 設定に直接関係するファイルのみを管理します。
-- **自動化:** 新しいマシンでのセットアップを可能な限り自動化します。
-- **ポータブル:** どのMacでも同じ環境を再現できるようにします。
-- **開発環境の分離:** 開発環境は原則Dockerで分離します。開発言語・コンパイラ・LSP・プロジェクトの依存関係はコンテナ側で管理し、macOSホストは日常のCLI・エディタ・GUIを中心とする最小構成にします。
+## 初期化後の復元
 
-`Brewfile`にはホストで使用するツールだけを記載します。
-`ripgrep` / `fd` / `jq` / `git-delta`などのCLIツールは、Neovimや日常操作で使用するため残しています。
-Dockerの実行環境は別途用意してください。`nvim-alt`の設定は現時点では変更していません。
-なお、`Brewfile`からの削除は、すでにホストへ導入済みのパッケージを自動でアンインストールするものではありません。
+1. `xcode-select --install`でCommand Line Toolsを導入し、完了を待つ。
+2. リポジトリを取得する。
 
-## 新しいMacでのセットアップ手順
+   ```sh
+   git clone --recurse-submodules https://github.com/runharu0662/dotfiles.git ~/dotfiles
+   cd ~/dotfiles
+   ./install.sh
+   ```
 
-新しいmacOS環境では、リポジトリを取得してインストーラーを実行します。
+3. 新しいWezTerm / Zshを開き、Loopを起動してアクセシビリティ権限を許可する。
+4. 下記の手動確認を行う。macOS本体の設定は手動で行う。
 
-### 1. Xcode Command Line Tools
+`install.sh`はHomebrewとBrewfileのツールを導入し、
+Neovimサブモジュールを初期化して設定をリンクする。
+既存Homebrewは標準パスからも検出する。既存設定は
+`~/.dotfiles-backup/<実行日時>/`へ退避し、同じリンクは再利用する。
+CLTがなければインストーラーを起動して終了するため、完了後に再実行する。
+Homebrew導入スクリプトの内容は実行前に確認する。
 
-未導入の場合は、先に次のコマンドを実行します。
+Gitのorigin URL、Git本人情報、認証設定は自動変更しない。
+macOS defaultsも自動適用しない。アプリ・パッケージのアンインストールは行わない。
 
-```bash
-xcode-select --install
-```
+## 構成と責務
 
-`install.sh`から起動することもできます。その場合、インストール完了後に
-`install.sh`をもう一度実行してください。
+| ファイル | 責務 |
+| --- | --- |
+| `Brewfile` | ホストの導入対象。Neovim関連の可能性がある既存依存も保持 |
+| `install.sh` | 導入・バックアップ・明示した設定のリンク |
+| `.zshrc` | Homebrew PATH、履歴、補完、基本options、標準prompt |
+| `.config/wezterm/` | ターミナルの外観・キー操作 |
+| `.config/nvim-alt` / `.gitmodules` | 既存Neovim。今回変更しない |
+| `.hammerspoon/` | 旧アプリ切替の参考設定。bootstrap対象外 |
+| `.config/karabiner/` | 現在使用中のキーボード・入力変換設定とルール素材を保存 |
 
-### 2. リポジトリのクローン
+PATH初期化は`.zshrc`に集約し、ログイン・非ログインの対話シェルで使用する。
+既存PATHの要素は保持し、Homebrewを優先して重複を除く。
+Zshは標準のhistory、completion、基本optionsとシンプルなpromptだけを使う。
+Oh My Zsh、Powerlevel10k、autosuggestions、syntax-highlightingは導入・読込しない。
+alias / functionは設けず、必要になった機能だけ後から`.zshrc`へ追加する。
+履歴は`~/.zsh_history`に保存・共有する。補完は標準`compinit`、キー操作はEmacs方式。
+Neovim用の`NVIM_APPNAME`、`GIT_EDITOR`と既存ロケールは保持する。
 
-このdotfilesリポジトリをホームディレクトリにクローンします。
-`nvim-alt`サブモジュールも同時に取得するため、`--recurse-submodules`を付けます。
+## macOS本体の設定
 
-```bash
-git clone --recurse-submodules https://github.com/runharu0662/dotfiles.git ~/dotfiles
-```
+macOS defaultsは管理・適用しない。`macos.sh`は削除した。
+Dock、Safari、スクリーンショット、Finder、キーボード、トラックパッド等は
+実際に使ってから必要な項目を手動で設定する。
+過去に適用した設定を自動で元に戻す処理も行わない。
 
-このフラグを忘れても、`install.sh`がサブモジュールを初期化します。
+## 手動確認・REVIEW
 
-### 3. セットアップ
+- Loop: トリガーキー、左右半分・最大化・画面移動、ログイン時起動を設定する。
+  Loop設定の保存・復元方式は未確定のため、今回は自動適用しない。
+- AeroSpace / yabai: 既存アプリがあれば終了し、ログイン項目を無効にする。
+  installerは、このリポジトリを直接指す旧AeroSpaceリンクのみ退避する。
+  他の場所を指すリンクや個人の設定には触れない。
+- Hammerspoon / Tailscale: 新規導入対象から外した。既存インストールは削除しない。
+  Hammerspoonの旧設定は参考として保持し、リンクは新規配置しない。
+- Karabiner: キーボード別修飾キー変更・Ctrl+[の日本語入力切替を確認する。
+  必要なら権限を許可する。`~/.config/karabiner`で現在使用中の設定・ルール素材を保存済み。
+- Neovim: `nvim`、`:checkhealth`、検索、SKK、日本語入力、画像貼付け、
+  LSP・補完・Copilotが従来どおり使えるか確認する。関連依存を削除しない。
+- WezTerm: workspace作成、ペイン操作、copy modeでのEnter、日本語IMEを確認する。
+- Zsh: `command -v brew git nvim`でHomebrew優先を確認する。
+  履歴保存・補完・promptを確認する。テーマ・pluginの復元は不要。
+  既存の`.zprofile` / `.zshenv`等が旧フレームワークを読み込んでいないか確認する。
+- Git: `git config --global user.name` / `user.email`、HTTPSまたはSSH認証を設定する。
+- `fzf` / `jq` / `git-delta` / `lsd`、Obsidian: Neovimの利用可能性があるため維持する。
+  `pngpaste` / `lazygit` / `ripgrep` / `fd` / Nerd Fontは既存Neovim向けに維持する。
+- WezTerm nightly: 現設定との互換性確認までは継続する。
+- Colima: 導入後、新しいZshで`colima start`を実行してDockerエンジンを起動する。
+  初回起動にはVMイメージ等のダウンロードが発生する。停止は`colima stop`。
+  Composeを`docker compose`で使うため、`~/.docker/config.json`の
+  `cliPluginsExtraDirs`配列に`$(brew --prefix)/lib/docker/cli-plugins`の実際のパスを追加する。
+  Apple Siliconの標準Homebrewでは次の設定になる。既存JSONの他の項目は保持する。
 
-`install.sh`はHomebrew、`Brewfile`のツール、Oh My Zsh、テーマ、プラグインを導入し、
-設定ファイルのシンボリックリンクを作成し、最後に`macos.sh`を実行します。
-`macos.sh`はDock、スクリーンショットの保存先、Safariのショートカットを設定します。
-既存の設定がある場合は削除せず、`~/.dotfiles-backup/<実行日時>/`へ退避します。
+  ```json
+  {
+    "cliPluginsExtraDirs": ["/opt/homebrew/lib/docker/cli-plugins"]
+  }
+  ```
 
-```bash
-cd ~/dotfiles
-./install.sh
-```
+  エンジン起動後、`docker version`、`docker compose version`、
+  `docker run --rm hello-world`を確認する（イメージのダウンロードが発生する）。
+  プロジェクトの言語・DB等はDockerfile / Compose / Dev Containerで管理する。
+  手順の参照: [Colima公式](https://github.com/abiosoft/colima)、
+  [Homebrew Compose設定](https://formulae.brew.sh/formula/docker-compose)。
 
-インターネットから取得したインストールスクリプトは、実行前に内容を確認してください。
-処理は再実行可能で、すでに導入済みの構成要素はそのまま利用します。
-
-## リポジトリの構成
-
-- **`.zshrc`, `.config/`, etc.:** 各種設定ファイルの実体。
-- **`install.sh`:** 必要なツールを導入し、設定ファイルのシンボリックリンクを作成するスクリプト。
-- **`macos.sh`:** macOSのDock・スクリーンショット・Safari設定を適用するスクリプト。
-- **`Brewfile`:** Homebrewで管理するパッケージのリスト。
-- **`.gitmodules`:** `nvim-alt`などのサブモジュールを管理するファイル。
+Brewfileから外した項目を理由に`brew bundle cleanup`を実行しない。
+現Brewfileに未記載でもNeovimが使うランタイム・辞書・ビルド依存があり得る。
+新MacでのNeovim全機能の復元は、それらの手動確認を含む。

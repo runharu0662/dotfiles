@@ -22,6 +22,15 @@ fi
 install_homebrew() {
   local installer
 
+  # PATHに未登録でも、既存のHomebrewを再利用する。
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    return
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+    return
+  fi
+
   if command -v brew >/dev/null 2>&1; then
     return
   fi
@@ -50,46 +59,10 @@ install_homebrew() {
   fi
 }
 
-clone_if_missing() {
-  local repository="$1"
-  local destination="$2"
-
-  if [[ -d "$destination/.git" ]]; then
-    printf 'Already installed: %s\n' "$destination"
-    return
-  fi
-  if [[ -e "$destination" || -L "$destination" ]]; then
-    printf 'Error: refusing to replace existing path: %s\n' "$destination" >&2
-    return 1
-  fi
-
-  git clone --depth=1 -- "$repository" "$destination"
-}
-
 install_homebrew
 
 git -C "$DOTFILES_DIR" submodule update --init --recursive
 brew bundle --file="$DOTFILES_DIR/Brewfile"
-
-readonly ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-clone_if_missing 'https://github.com/ohmyzsh/ohmyzsh.git' "$HOME/.oh-my-zsh"
-mkdir -p -- "$ZSH_CUSTOM/themes" "$ZSH_CUSTOM/plugins"
-clone_if_missing 'https://github.com/romkatv/powerlevel10k.git' \
-  "$ZSH_CUSTOM/themes/powerlevel10k"
-clone_if_missing 'https://github.com/zsh-users/zsh-autosuggestions.git' \
-  "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-clone_if_missing 'https://github.com/zsh-users/zsh-syntax-highlighting.git' \
-  "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-
-# このリポジトリの GitHub HTTPS remote だけを SSH に変更する。
-if remote_url="$(git -C "$DOTFILES_DIR" remote get-url origin 2>/dev/null)" &&
-  [[ "$remote_url" =~ ^https://github\.com/([^/]+)/([^/]+)(\.git)?$ ]]; then
-  repo_path="${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
-  repo_path="${repo_path%.git}"
-  ssh_url="git@github.com:${repo_path}.git"
-  git -C "$DOTFILES_DIR" remote set-url origin "$ssh_url"
-  printf 'Changed remote URL to SSH: %s\n' "$ssh_url"
-fi
 
 backup_and_link() {
   local source_path="$1"
@@ -119,8 +92,8 @@ backup_and_link() {
   printf 'Linked: %s -> %s\n' "$target_path" "$source_path"
 }
 
-dot_files=(.zshrc .hammerspoon)
-config_files=(nvim-alt wezterm karabiner aerospace)
+dot_files=(.zshrc)
+config_files=(nvim-alt wezterm karabiner)
 
 for file in "${dot_files[@]}"; do
   backup_and_link "$DOTFILES_DIR/$file" "$HOME/$file"
@@ -130,5 +103,13 @@ for file in "${config_files[@]}"; do
   backup_and_link "$DOTFILES_DIR/.config/$file" "$HOME/.config/$file"
 done
 
-# Dock・スクリーンショット・SafariのmacOS設定を適用する。
-/bin/bash "$DOTFILES_DIR/macos.sh"
+# 以前このリポジトリが配置したAeroSpaceリンクだけを退避する。
+# 個人で作成した設定や、別の場所を指すリンクには触れない。
+aerospace_target="$HOME/.config/aerospace"
+if [[ -L "$aerospace_target" && "$(readlink "$aerospace_target")" == "$DOTFILES_DIR/.config/aerospace" ]]; then
+  mkdir -p -- "$BACKUP_DIR/.config"
+  mv -- "$aerospace_target" "$BACKUP_DIR/.config/aerospace"
+  printf 'Backed up obsolete AeroSpace link: %s\n' "$aerospace_target"
+fi
+
+printf 'Setup complete. Open Loop and grant Accessibility permission.\n'
