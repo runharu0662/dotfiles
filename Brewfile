@@ -14,6 +14,7 @@ brew "fd"
 brew "lsd"
 
 # --- Interactive CLI / Git Tools ---
+brew "gh"            # GitHub CLI
 brew "lazygit"       # TUI Gitクライアント
 brew "git-delta"     # git diff viewer (better diff)
 brew "fzf"           # fuzzy finder (Neovimでも使える)
