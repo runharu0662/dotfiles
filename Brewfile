@@ -8,6 +8,7 @@ tap "jesseduffield/lazygit"
 
 # --- Core CLI tools ---
 brew "neovim"
+brew "tree-sitter-cli"   # nvim-treesitter のパーサー生成
 brew "git"
 brew "ripgrep"
 brew "fd"
