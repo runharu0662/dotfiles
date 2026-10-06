@@ -45,7 +45,11 @@ install_homebrew() {
   curl --proto '=https' --tlsv1.2 --fail --silent --show-error \
     --location --output "$installer" \
     'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
-  NONINTERACTIVE=1 /bin/bash "$installer"
+  # 初回導入ではsudo認証できるよう、親環境の指定も含めて対話モードにする。
+  (
+    unset NONINTERACTIVE
+    /bin/bash "$installer"
+  )
   rm -f -- "$installer"
   trap - RETURN
 

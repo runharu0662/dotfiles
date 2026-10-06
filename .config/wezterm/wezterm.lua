@@ -2,7 +2,13 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.color_scheme = "tokyonight"
-config.font = wezterm.font("Hack Nerd Font")
+-- ユーザーがインストールしたフォントを検索対象に含める。
+config.font_dirs = { wezterm.home_dir .. "/Library/Fonts" }
+-- Hack Nerd Font にない日本語の漢字はヒラギノで補い、□になるのを防ぐ。
+config.font = wezterm.font_with_fallback({
+  "Hack Nerd Font",
+  "Hiragino Kaku Gothic ProN",
+})
 
 config.automatically_reload_config = true
 config.font_size = 16.0
