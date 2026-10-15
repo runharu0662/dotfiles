@@ -20,13 +20,15 @@ cd ~/dotfiles
 
 Homebrewがなければ対話形式で導入する。途中の管理者パスワード入力や確認に応答するため、`sudo ./install.sh`ではなく通常のユーザーで実行する。既存のHomebrewはPATHに未登録でも再利用する。
 
-インストーラーはNeovim設定のサブモジュールを`web`ブランチのリモート最新版へ更新し、Brewfileのパッケージを導入する。その後、`.zshrc`と`~/.config/`内の`nvim-alt`・`wezterm`・`karabiner`をリンクする。既存設定は`~/.dotfiles-backup/<日時>/`へ退避する。Loopの設定復元は下記の手順で別途行う。
+インストーラーはNeovim設定のサブモジュールを`web`ブランチのリモート最新版へ更新し、Brewfileのパッケージを導入する。その後、`.zshrc`と`~/.config/`内の`RigNvim`・`wezterm`・`karabiner`をリンクする。既存設定は`~/.dotfiles-backup/<日時>/`へ退避する。Loopの設定復元は下記の手順で別途行う。
 
-完了後はターミナルを開き直すか、次を実行してHomebrewのPATHと`NVIM_APPNAME=nvim-alt`を読み込む。
+完了後はターミナルを開き直すか、次を実行してHomebrewのPATHと`NVIM_APPNAME=RigNvim`を読み込む。
 
 ```sh
 exec zsh -l
 ```
+
+旧名`nvim-alt`のデータ・履歴・キャッシュは、移行先が未作成の場合に`RigNvim`へ引き継ぐ。既存ツール内の絶対パスを維持するため、旧データパスには互換リンクを残す。
 
 ## Neovimの初回セットアップ
 
@@ -43,7 +45,7 @@ nvim
 
 - 日本語入力：Denoの導入後にNeovimを再起動し、`:Lazy`で`skkeleton`と`denops.vim`を確認する。挿入モードの`Ctrl-j`で切り替える。SKK辞書は設定に同梱されている。
 - Copilot：`:Copilot auth`で認証し、`:Copilot status`で確認する。`Space l t`で有効・無効を切り替える。GitHub CLIの`gh auth login`とは別の認証になる。
-- LSP・整形：必要なツールだけ`:Mason`などで導入する。Node系のLSPやPrettier・ESLintをホストで使う場合はNode.jsも別途必要。詳しくは[Neovim設定のREADME](.config/nvim-alt/README.md)を参照する。
+- LSP・整形：必要なツールだけ`:Mason`などで導入する。Node系のLSPやPrettier・ESLintをホストで使う場合はNode.jsも別途必要。詳しくは[Neovim設定のREADME](.config/RigNvim/README.md)を参照する。
 
 WezTermはnightly版を使用する。Hack Nerd FontはBrewfileで導入し、日本語表示はmacOSのヒラギノへフォールバックする。
 

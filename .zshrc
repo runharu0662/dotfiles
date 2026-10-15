@@ -12,7 +12,7 @@ fi
 # 既存Neovim環境の起動条件を維持する。
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export NVIM_APPNAME="nvim-alt"
+export NVIM_APPNAME="RigNvim"
 export GIT_EDITOR="nvim"
 
 # 履歴はZsh標準機能で保存・共有する。

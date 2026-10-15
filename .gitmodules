@@ -1,4 +1,4 @@
-[submodule ".config/nvim-alt"]
-	path = .config/nvim-alt
-	url = https://github.com/runharu0662/nvim-alt.git
+[submodule ".config/RigNvim"]
+	path = .config/RigNvim
+	url = https://github.com/runharu0662/RigNvim.git
 	branch = web

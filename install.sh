@@ -66,8 +66,8 @@ install_homebrew() {
 install_homebrew
 
 # .gitmodulesの追跡ブランチから取得し、Neovimはwebブランチで使用する。
-git -C "$DOTFILES_DIR" submodule update --init --recursive --remote -- .config/nvim-alt
-nvim_config_dir="$DOTFILES_DIR/.config/nvim-alt"
+git -C "$DOTFILES_DIR" submodule update --init --recursive --remote -- .config/RigNvim
+nvim_config_dir="$DOTFILES_DIR/.config/RigNvim"
 if git -C "$nvim_config_dir" show-ref --verify --quiet refs/heads/web; then
   git -C "$nvim_config_dir" switch web
 else
@@ -105,7 +105,25 @@ backup_and_link() {
 }
 
 dot_files=(.zshrc)
-config_files=(nvim-alt wezterm karabiner)
+config_files=(RigNvim wezterm karabiner)
+
+# 既存環境のプラグイン・履歴・inboxを引き継ぐ。
+# Masonなどに残る絶対パスも使えるよう、旧パスは互換リンクにする。
+for base_dir in "$HOME/.local/share" "$HOME/.local/state" "$HOME/.cache"; do
+  old_path="$base_dir/nvim-alt"
+  new_path="$base_dir/RigNvim"
+  if [[ -d "$old_path" && ! -L "$old_path" && ! -e "$new_path" && ! -L "$new_path" ]]; then
+    mv -- "$old_path" "$new_path"
+    ln -s -- "$new_path" "$old_path"
+    printf 'Migrated: %s -> %s\n' "$old_path" "$new_path"
+  fi
+done
+
+old_config="$HOME/.config/nvim-alt"
+if [[ -L "$old_config" && "$(readlink "$old_config")" == "$DOTFILES_DIR/.config/nvim-alt" ]]; then
+  mkdir -p -- "$BACKUP_DIR/.config"
+  mv -- "$old_config" "$BACKUP_DIR/.config/nvim-alt"
+fi
 
 for file in "${dot_files[@]}"; do
   backup_and_link "$DOTFILES_DIR/$file" "$HOME/$file"
