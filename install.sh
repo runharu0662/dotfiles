@@ -124,4 +124,5 @@ if [[ -L "$aerospace_target" && "$(readlink "$aerospace_target")" == "$DOTFILES_
   printf 'Backed up obsolete AeroSpace link: %s\n' "$aerospace_target"
 fi
 
-printf 'Setup complete. Open Loop and grant Accessibility permission.\n'
+printf 'Setup complete. Restart your terminal to load PATH and NVIM_APPNAME.\n'
+printf 'See README.md for Neovim first-run setup, Loop preferences, and macOS permissions.\n'
