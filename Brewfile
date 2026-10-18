@@ -1,6 +1,6 @@
-# macOSホストには日常のCLI・エディタ・GUIのみを導入する。
+# macOSホストには日常のCLI・エディタ・GUIと、LSP用のGo・Node.jsを導入する。
 # 新規のプロジェクト依存は原則コンテナ側へ置く。
-# 既存Neovimと、その依存の可能性があるツールは今回変更しない。
+# アプリの実行・ビルド・テストはDocker、ホストのGo・Node.jsは解析とツール導入用。
 # REVIEW: fzf / jq / git-delta / lsd はNeovimの間接利用を否定できないため維持する。
 
 # --- Tap sources ---
@@ -14,6 +14,11 @@ brew "git"
 brew "ripgrep"
 brew "fd"
 brew "lsd"
+
+# --- Host dependencies for Neovim language tools ---
+# LSP自体はMasonで管理する。formulaのバージョンは固定しない。
+brew "go"              # gopls の導入・解析 / gofmt
+brew "node"            # Node系LSPの実行・導入（npmを含む）
 
 # --- Interactive CLI / Git Tools ---
 brew "gh"            # GitHub CLI

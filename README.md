@@ -36,16 +36,21 @@ exec zsh -l
 nvim --version
 tree-sitter --version
 deno --version
+go version
+node --version
+npm --version
 nvim
 ```
 
-現在の`web`設定はNeovim 0.12以降とtree-sitter CLI 0.26.1以降を前提としている。Brewfileには`neovim`・`tree-sitter-cli`と、日本語入力用の`deno`を含めている。バージョンが不足する場合は`brew update`の後に`brew upgrade neovim tree-sitter-cli`を実行し、再確認する。
+現在の`web`設定はNeovim 0.12以降とtree-sitter CLI 0.26.1以降を前提としている。Brewfileには`neovim`・`tree-sitter-cli`と、日本語入力用の`deno`、LSP用の`go`・`node`（npmを含む）を含めている。バージョンが不足する場合は`brew update`の後に`brew upgrade neovim tree-sitter-cli`を実行し、再確認する。
 
 初回起動ではプラグインとTreesitterのパーサーを取得するため、ネットワーク接続が必要。`:Lazy`でインストール完了を確認し、パーサーの取得後にファイルを開き直す。エラーが残る場合は`:messages`と`:checkhealth`で確認する。
 
 - 日本語入力：Denoの導入後にNeovimを再起動し、`:Lazy`で`skkeleton`と`denops.vim`を確認する。挿入モードの`Ctrl-j`で切り替える。SKK辞書は設定に同梱されている。
 - Copilot：`:Copilot auth`で認証し、`:Copilot status`で確認する。`Space l t`で有効・無効を切り替える。GitHub CLIの`gh auth login`とは別の認証になる。
-- LSP・整形：必要なツールだけ`:Mason`などで導入する。Node系のLSPやPrettier・ESLintをホストで使う場合はNode.jsも別途必要。詳しくは[Neovim設定のREADME](.config/RigNvim/README.md)を参照する。
+- LSP・整形：必要なツールだけ`:Mason`などで導入する。ホストのGo・Node.js/npmはHomebrew、LSPはMasonで管理する。アプリの実行・ビルド・テストはDockerで行う。起動時に全LSPを自動導入せず、Goは`:LspInstall gopls`で追加する。詳しくは[Neovim設定のREADME](.config/RigNvim/README.md)を参照する。
+
+ホストのGoは解析時にも使われ、モジュール・ビルドキャッシュを作る場合がある。Docker内の依存はホストから自動では参照されない。GoのバージョンはプロジェクトとDocker環境に合わせて確認する。Brewfileはformulaのバージョンを固定しない。Neovim設定の仕様バージョンはv0.1.1（[変更履歴](.config/RigNvim/CHANGELOG.md)）。
 
 WezTermはnightly版を使用する。Hack Nerd FontはBrewfileで導入し、日本語表示はmacOSのヒラギノへフォールバックする。
 
