@@ -46,7 +46,7 @@ nvim
 
 初回起動ではプラグインとTreesitterのパーサーを取得するため、ネットワーク接続が必要。`:Lazy`でインストール完了を確認し、パーサーの取得後にファイルを開き直す。エラーが残る場合は`:messages`と`:checkhealth`で確認する。
 
-- 日本語入力：Denoの導入後にNeovimを再起動し、`:Lazy`で`skkeleton`と`denops.vim`を確認する。挿入モードの`Ctrl-j`で切り替える。SKK辞書は設定に同梱されている。
+- 日本語入力：Neovim設定の`lua/config/local.lua`に`return { japanese_input = true }`を指定し、Denoの導入後にNeovimを再起動する。`:Lazy`で`skkeleton`と`denops.vim`を確認し、挿入モードの`Ctrl-j`で切り替える。SKK辞書は設定に同梱されている。
 - Copilot：`:Copilot auth`で認証し、`:Copilot status`で確認する。`Space l t`で有効・無効を切り替える。GitHub CLIの`gh auth login`とは別の認証になる。
 - LSP・整形：必要なツールだけ`:Mason`などで導入する。ホストのGo・Node.js/npmはHomebrew、LSPはMasonで管理する。アプリの実行・ビルド・テストはDockerで行う。起動時に全LSPを自動導入せず、Goは`:LspInstall gopls`で追加する。詳しくは[Neovim設定のREADME](.config/RigNvim/README.md)を参照する。
 
